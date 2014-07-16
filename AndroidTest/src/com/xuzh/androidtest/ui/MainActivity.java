@@ -26,7 +26,7 @@ public class MainActivity extends Activity {
         initViews();
 
         String value = getMetaData("xuzhaohu");
-        Log.i("xuzhaohu", value);
+        Log.d("xuzhaohu", value);
 
     }
 
