@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal" >
+
+        <View
+            android:id="@+id/seperator"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="#dadada" />
+
+        <com.xuzh.androidtest.popwin.DialogSpinner
+            android:id="@+id/sp_city"
+            style="@style/Spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:popupBackground="#fff"
+            android:text="选择城市"
+            android:textSize="12sp" />
+
+        <View
+            android:id="@+id/seperator"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="#dadada" />
+    </LinearLayout>
+
+</RelativeLayout>
