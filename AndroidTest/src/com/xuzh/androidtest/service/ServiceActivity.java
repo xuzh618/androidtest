@@ -1,7 +1,6 @@
 package com.xuzh.androidtest.service;
 
-import com.xuzh.androidtest.R;
-
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.ComponentName;
@@ -9,10 +8,14 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Process;
+import android.os.RemoteException;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import com.xuzh.androidtest.R;
 
 public class ServiceActivity extends Activity {
 
@@ -23,10 +26,13 @@ public class ServiceActivity extends Activity {
         setContentView(R.layout.service_view);
 
         initViews();
+
+        Log.d("ServiceActivity", "process id == " + Process.myPid());//线程id
     }
 
     private ActionBar mActionBar;
 
+    @SuppressLint("NewApi")
     @Override
     protected void onStart() {
         // TODO Auto-generated method stub
@@ -100,8 +106,10 @@ public class ServiceActivity extends Activity {
         });
     }
 
-    /*** 通过 binder 实现activity 与service之间的通讯 ***/
+    /*** 通过 自定义binder 实现activity 与service之间的通讯 ***/
     private MyService.MyBinder myBinder = null;
+    /*** 通过 AIDL binder 实现activity 与service之间的通讯 建议 ***/
+    private MyAIDLService myBinderAIDL = null;
     private boolean isBinder = false;//绑定的标志位
     private ServiceConnection mConnection = new ServiceConnection() {
 
@@ -114,8 +122,16 @@ public class ServiceActivity extends Activity {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             // 执行binder的相关方法
-            myBinder = (MyService.MyBinder) service;
-            myBinder.onStartDownLoad();
+            //            myBinder = (MyService.MyBinder) service;
+            //            myBinder.onStartDownLoad();
+            myBinderAIDL = MyAIDLService.Stub.asInterface(service);//跨进程通信
+            try {
+                myBinderAIDL.toUpperCase("abcd");
+                myBinderAIDL.plus(3, 3);
+            } catch (RemoteException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             isBinder = true;
         }
     };
@@ -124,6 +140,10 @@ public class ServiceActivity extends Activity {
     protected void onDestroy() {
         // TODO Auto-generated method stub
         super.onDestroy();
+        if (mConnection != null && isBinder) {
+            unbindService(mConnection);
+            mConnection = null;
+        }
     }
 
 }
