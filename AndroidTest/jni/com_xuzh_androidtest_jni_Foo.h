@@ -18,9 +18,17 @@ JNIEXPORT void JNICALL Java_com_xuzh_androidtest_jni_Foo_method1
 /*
  * Class:     com_xuzh_androidtest_jni_Foo
  * Method:    method2
- * Signature: ()V
+ * Signature: ()I
  */
-JNIEXPORT void JNICALL Java_com_xuzh_androidtest_jni_Foo_method2
+JNIEXPORT jint JNICALL Java_com_xuzh_androidtest_jni_Foo_method2
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     com_xuzh_androidtest_jni_Foo
+ * Method:    method3
+ * Signature: ()Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_xuzh_androidtest_jni_Foo_method3
   (JNIEnv *, jobject);
 
 #ifdef __cplusplus

@@ -12,5 +12,7 @@ public class Foo {
      */
     native void method1();
 
-    native void method2();
+    native int method2();
+
+    native String method3();
 }
